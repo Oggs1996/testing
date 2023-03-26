@@ -2,8 +2,25 @@ from collections import deque
 
 
 def person_is_a_seller(name):
-    if person[-1] == 'm':
+    if name[-1] == 'm':
         return True
+
+
+def search_name(name):
+    search_queue = deque()
+    search_queue += graph[name]
+    searched = []
+    while search_queue:
+        person = search_queue.popleft()
+        if person not in searched:
+            if person_is_a_seller(person):
+                print(person + ' is a seller')
+                return True
+            else:
+                search_queue += graph[person]
+                searched.append(person)
+                print(search_queue)
+                print(searched)
 
 graph = {}
 graph['you'] = ['alice', 'bob', 'claire']
@@ -11,19 +28,13 @@ graph['bob'] = ['anuj', 'peggy']
 graph['alice'] = ['peggy']
 graph['claire'] = ['thom', 'johny']
 graph['anuj'] = []
-graph['peggy'] = []
+graph['peggy'] = ['nic']
 graph['thom'] = []
 graph['johny'] = []
-search_queue = deque()
-search_queue += graph['you']
+graph['nic'] = []
 
-while search_queue:
-    person = search_queue.popleft()
-    if person_is_a_seller(person):
-        print(person + ' is a seller')
-    else:
-        search_queue += graph[person]
-        print(search_queue)
+print(search_name('you'))
+
 
 
 # def quicksort(array):
